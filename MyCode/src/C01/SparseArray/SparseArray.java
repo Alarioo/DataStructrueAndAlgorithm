@@ -1,4 +1,4 @@
-package SparseArray;
+package C01.SparseArray;
 
 import java.io.*;
 
@@ -11,8 +11,8 @@ public class SparseArray {
     生成棋盘
     */
     public static void main(String[] args) throws IOException {
-        BufferedWriter bw=new BufferedWriter(new FileWriter("E:\\code\\JavaCode\\DataStructrueAndAlgorithm\\MyCode\\src\\SparseArray\\map.data"));
-        BufferedReader br=new BufferedReader(new FileReader("E:\\code\\JavaCode\\DataStructrueAndAlgorithm\\MyCode\\src\\SparseArray\\map.data"));
+        BufferedWriter bw=new BufferedWriter(new FileWriter("MyCode\\src\\C01\\SparseArray\\map.data"));
+        BufferedReader br=new BufferedReader(new FileReader("MyCode\\src\\C01\\SparseArray\\map.data"));
         int[][]  chess=new int[18][18];
         chess[1][2] =1;
         chess[2][3] =1;
@@ -42,6 +42,10 @@ public class SparseArray {
         }
     }
     public static int[][] getSparseArray(int[][] chess,BufferedWriter bw) throws IOException{
+        //判断是否为二维非空数组
+        if(chess.length==0||chess[0].length==0){
+            throw new RuntimeException("输入数组非二维非空数组");
+        }
         int row=chess.length;
         int colum=chess[0].length;
         int sum=0;
