@@ -1,0 +1,66 @@
+一、java中的队列
+Queue： 基本上，一个队列就是一个先入先出（FIFO）的数据结构
+
+Queue接口与List、Set同一级别，都是继承了Collection接口。LinkedList实现了Deque接口
+
+
+二、非阻塞队列
+对于非阻塞队列，一般情况下建议使用 offer、poll 和 peek 三个方法，不建议使用 add 和 remove 方法。因为使用 offer、poll 和 peek 三个方法可以通过返回值判断操作成功与否，
+而使用 add 和 remove 方法却不能达到这样的效果。
+注意：非阻塞队列中的方法都没有进行同步措施。
+非阻塞队列不能阻塞，多线程时，当队列满或者队列空时，只能使用队列 wait()，notify() 进行队列消息传送。
+
+1. LinkedList
+LinkedList 除了实现的 List 接口，也实现了 Deque 接口，可以当做双端队列来使用。
+
+2. PriorityQueue
+PriorityQueue 类实质上维护了一个有序列表。加入到 Queue 中的元素根据它们的天然排序（通过其 java.util.Comparable 实现）或者根据传递给构造函数的 java.util.Comparator 实现来定位。该队列不允许使用 null 元素也不允许插入不可比较的对象
+
+PriorityQueue 队列的头指排序规则最小那个元素。如果多个元素都是最小值则随机选一个。
+PriorityQueue 是一个无界队列，但是初始的容量（实际是一个Object[]），随着不断向优先级队列添加元素，其容量会自动扩容，无需指定容量增加策略的细节。
+
+3. ConcurrentLinkedQueue
+ConcurrentLinkedQueue 是基于链接节点的、线程安全的队列（CAS）。并发访问不需要同步。因为它在队列的尾部添加元素并从头部删除它们，所以只要不需要知道队列的大小，ConcurrentLinkedQueue 对公共集合的共享访问就可以工作得很好。收集关于队列大小的信息会很慢，需要遍历队列。
+
+同样此队列不允许使用null元素，
+
+4. 非阻塞队列的操作
+add(E e)：将元素 e 插入到队列末尾，如果插入成功，则返回 true；如果插入失败（即队列已满），则会抛出异常；
+
+remove()：移除队首元素，若移除成功，则返回 true；如果移除失败（队列为空），则会抛出异常；
+
+remove(Object o)：移除指定的元素，若移除成功，则返回 true；如果移除失败（队列为空），则会抛出异常
+
+offer(E e)：将元素 e 插入到队列末尾，如果插入成功，则返回 true；如果插入失败（即队列已满），则返回 false；
+
+poll()：移除并获取队首元素，若成功，则返回队首元素；否则返回 null；
+
+peek()：获取队首元素，若成功，则返回队首元素；否则返回 null
+
+isEmpty()：队列是否为空
+
+size()：队列长度
+
+
+三、阻塞队列
+阻塞队列可以阻塞，当阻塞队列当队列里面没有值时，会阻塞直到有值输入。输入也一样，当队列满的时候，会阻塞，直到队列有空间。
+
+1. 阻塞队列
+ArrayBlockingQueue ：一个由数组支持的有界队列。
+LinkedBlockingQueue ：一个由链接节点支持的可选有界队列。
+PriorityBlockingQueue ：一个由优先级堆支持的无界优先级队列。
+DelayQueue ：一个由优先级堆支持的、基于时间的调度队列。
+SynchronousQueue ：一个利用 BlockingQueue 接口的简单聚集（rendezvous）机制。
+
+2. 阻塞队列的操作
+阻塞队列包括了非阻塞队列中的大部分方法，上面列举的5个方法在阻塞队列中都存在，但是要注意这5个方法在阻塞队列中都进行了同步措施。
+
+除此之外，阻塞队列提供了另外4个非常有用的方法：
+
+put(E e)：用来向队尾存入元素，如果队列满，则等待；
+take()：用来从队首取元素，如果队列为空，则等待；
+offer(E e,long timeout, TimeUnit unit)：用来向队尾存入元素，如果队列满，则等待一定的时间，当时间期限达到时，如果还没有插入成功，则返回false；否则返回true；
+poll(long timeout, TimeUnit unit)：用来从队首取元素，如果队列空，则等待一定的时间，当时间期限达到时，如果取到，则返回null；否则返回取得的元素；
+————————————————
+版权声明：本文为CSDN博主「一名小码农」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/zyx1260168395/article/details/103656994
