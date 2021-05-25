@@ -1,0 +1,4 @@
+节点 1node 2data 3next
+头节点不放具体数据
+尾节点next==null
+重写toString
