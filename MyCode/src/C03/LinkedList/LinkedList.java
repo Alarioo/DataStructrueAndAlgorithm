@@ -1,6 +1,6 @@
 package C03.LinkedList;
 
-public class LinkedListManager {
+public class LinkedList {
     private Node head =new Node(0,"",null);//创建头节点
     private Node temp;//创建辅助节点
 

@@ -1,0 +1,41 @@
+节点 1node 2data 3next
+头节点不放具体数据
+尾节点next==null
+重写toString
+
+java都是“值传递”，关键看这个值是什么，简单变量就是复制了具体值，引用变量就是复制了地址呗。特别的，字符串虽然是引用类型，但是它是不可变的，当然不会被修改
+
+
+
+https://blog.csdn.net/belongtocode/article/details/107712435
+String的底层是一个不可变数据，所以每次给他赋新的值的时候都相当于新建了一个String对象
+（如果String常量池里没有该字符串的话），我们可以验证一下。
+以下哪种JAVA的变量表达式使得变量a和变量b具有相同的内存引用地址( )
+
+A.String a = "hello"; String b = "hello";
+
+B.Integer a; Integer b = a;
+
+C.int a = 1; Integer b = new Integer(1);
+
+D.int a = 1; Integer b = 1;
+
+
+内存引用地址，是指栈中存放的地址，来指向堆中的某个位置。
+
+int 是基本类型，数据直接存放在栈中，不存在内存引用地址的说法
+
+A对 指向常量池里的"hello"。
+
+B对。选项 Integer a 应该初始化。如果Integer a和b都是全局变量就是正确的，如果是局部变量就是错误的，因为需要初始化
+
+int和任意Integer都是同一地址Integer只在127范围内才是同地址，超出就false，integer()与Integer,Integer()无论什么数范围 都不同地址
+
+C错 int a =1;并不指向堆中，它只有值，没有引用地址，Integer b =new Integer(1);指向堆中地址为1的位置。
+
+D错 原因同C
+https://blog.csdn.net/weixin_32482133/article/details/114065271
+
+定义的每一个类都是引用类型，当一个实例复制给另一个实例的时候，就是你的temp=path，实际上是把path所指向的内存地址空间传递给了temp，所以当temp进行操作改变的时候，
+path也就发生了改变，因为两个变量好比一个房间的两把钥匙，无论谁用钥匙进去改变了房间中的物品，然后用另外一把钥匙进去看到的肯定是改变后的房间。
+https://blog.csdn.net/weixin_32482133/article/details/114065271
