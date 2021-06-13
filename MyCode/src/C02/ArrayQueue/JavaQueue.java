@@ -1,10 +1,13 @@
 package C02.ArrayQueue;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class JavaQueue {
     public static void main(String[] args) {
         //因为使用 offer、poll 和 peek 三个方法可以通过返回值判断操作成功与否，
+        Queue<Integer> de=new ArrayDeque<>();
+
         Queue<Integer> ls=new LinkedList<>();
         for (int i=0;i<3;i++){
             ls.offer(i);
@@ -15,6 +18,7 @@ public class JavaQueue {
             System.out.print(ls.poll()+" ");;
         }
         System.out.println("默认小顶堆");
+
         PriorityQueue<Integer> pq=new PriorityQueue<>();
         pq.offer(3);
         pq.offer(1);
