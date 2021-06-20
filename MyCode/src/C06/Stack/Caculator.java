@@ -16,7 +16,10 @@ public class Caculator{
         System.out.println(suffixStack);
         int res=Caculate(suffixStack);
         System.out.println(res);
-
+        Stack<Integer> ss=new Stack<>();
+        ss.add(1);
+        ss.add(2);
+        System.out.println(ss.pop()+ss.pop());
     }
     public static Stack<String> stringToStack(String str){
         Stack<String> s=new Stack<>();
