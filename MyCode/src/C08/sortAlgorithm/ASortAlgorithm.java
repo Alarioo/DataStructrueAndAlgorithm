@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class ASortAlgorithm {
     public static void main(String[] args) {
-        int size=20;       //排序数组大小
+        int size=1500;       //排序数组大小
         int[] arr=new int[size];
         //随机生成数组
         for (int i=0;i<arr.length;i++){
@@ -19,13 +19,18 @@ public class ASortAlgorithm {
         int[] order;
         //冒泡排序
 /*       order=BubbleSort.sort(arr);
-        show(arr,order);*/
+        show(arr,order);
         //选择排序
- /*       order=SelectSort.sort(arr);
-        show(arr,order);*/
+       order=SelectSort.sort(arr);
+        show(arr,order);
         //插入排序
         order=InsertionSort.sort(arr);
         show(arr,order);
+        //希尔排序
+        order=ShellSort.swapSort(arr);
+        show(arr,order);
+        order=ShellSort.shiftSort(arr);
+        show(arr,order); */
         }
 
     public static void show(int[] arr,int[] arr2){
@@ -134,5 +139,50 @@ class InsertionSort{
         return order;
     }
 }
-
+class ShellSort{
+    public static int[] swapSort(int[] arr){
+        long start=System.currentTimeMillis();
+        int[] order=Arrays.copyOf(arr,arr.length);
+        int m=arr.length;
+        if(m!=1){
+            for(int gap=m/2;gap>0;gap=gap/2){
+                //从gap到arr.length 以gap为间隔依次插入   相邻对比交换  类似有序序列冒泡 全得遍历一遍
+                for(int i=gap;i<m;i++){
+                    for(int j=i-gap;j>=0;j-=gap){
+                        if(order[j]>order[j+gap]){
+                            int temp = order[j];
+                            order[j] =order[j+gap];
+                            order[j+gap]=temp;
+                        }
+                    }
+                }
+            }
+        }
+        long end=System.currentTimeMillis();
+        System.out.println("插入排序用时"+((end-start)/1000)+"秒");
+        return order;
+    }
+    public static int[] shiftSort(int[] arr){
+        long start=System.currentTimeMillis();
+        int[] order=Arrays.copyOf(arr,arr.length);
+        int m=arr.length;
+        if(m!=1){
+            for (int gap=m/2;gap>0;gap=gap/2){
+                for(int i=gap;i<m;i+=gap){
+                    //从gap到arr.length 以gap为间隔依次插入  移位插入排序:插入到比小于插入值的数后面或者插入到0位置   找到位置后结束遍历
+                    int j=i-gap;
+                    int temp=order[i];
+                    while( j>=0 && order[j]>temp){
+                        order[j+gap]=order[j];
+                        j--;
+                    }
+                    order[j+gap]=temp;
+                }
+            }
+        }
+        long end=System.currentTimeMillis();
+        System.out.println("插入排序用时"+((end-start)/1000)+"秒");
+        return order;
+    }
+}
 
