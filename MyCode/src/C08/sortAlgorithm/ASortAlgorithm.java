@@ -10,8 +10,9 @@ import java.util.Date;
  */
 public class ASortAlgorithm {
     public static void main(String[] args) {
-        int size=1500;       //排序数组大小
+        int size=20;       //排序数组大小
         int[] arr=new int[size];
+        //int[] arr={615,1511,1219,417,1260,617,974,1701,487,1687,1976,165,301,631,1514,1064,168,440,484,1956};
         //随机生成数组
         for (int i=0;i<arr.length;i++){
             arr[i]=(int)(Math.random()*size*100);
@@ -30,17 +31,23 @@ public class ASortAlgorithm {
         order=ShellSort.swapSort(arr);
         show(arr,order);
         order=ShellSort.shiftSort(arr);
-        show(arr,order);*/
+        show(arr,order);
+        //快速排序
+        show(arr);
+        QuickSort.sort(arr,0, arr.length-1);
+        show(arr);*/
+        //归并排序
+        show(arr);
+        order=MergerSort.sort(arr);
+        show(arr,order);
         }
-
-    public static void show(int[] arr,int[] arr2){
-        System.out.println("原数组：");
-        for(int i=0;i<arr.length;i++){
-            System.out.print(arr[i]+" ");
-        }
-        System.out.println("\n"+"排序后:");
-        for(int i=0;i<arr2.length;i++){
-            System.out.print(arr2[i]+" ");
+    public static void show(int[] ... arrs){
+        System.out.println("输出数组：");
+        for (int[] arr:arrs){
+            for(int i=0;i<arr.length;i++){
+                System.out.print(arr[i]+" ");
+            }
+            System.out.println("");
         }
     }
 }
@@ -66,7 +73,7 @@ class BubbleSort {
             }
         }
         long end=System.currentTimeMillis();
-        System.out.println("选择排序用时"+((end-start)/1000)+"秒");
+        System.out.println("冒泡排序用时"+((end-start)/1000)+"秒");
         return order;
     }
 }
@@ -89,7 +96,7 @@ class SelectSort{
             }
         }
         long end = System.currentTimeMillis();
-        System.out.println("冒泡排序用时"+((end-start)/1000)+"秒");
+        System.out.println("选择排序用时"+((end-start)/1000)+"秒");
         return order;
     }
 }
@@ -113,7 +120,7 @@ class InsertionSort{
         System.out.println("插入排序用时"+((end-start)/1000)+"秒");
         return order;
     }
-    public static int[] mysort(int[] arr){
+/*    public static int[] mysort(int[] arr){
         long start=System.currentTimeMillis();
         int[] order=Arrays.copyOf(arr,arr.length);
         int m=arr.length;
@@ -137,31 +144,9 @@ class InsertionSort{
         long end=System.currentTimeMillis();
         System.out.println("插入排序用时"+((end-start)/1000)+"秒");
         return order;
-    }
+    }*/
 }
 class ShellSort{
-    public static int[] swapSort(int[] arr){
-        long start=System.currentTimeMillis();
-        int[] order=Arrays.copyOf(arr,arr.length);
-        int m=arr.length;
-        if(m!=1){
-            for(int gap=m/2;gap>0;gap=gap/2){
-                for(int i=gap;i<m;i++){
-                    //将order[i-n*gap]内最小的排至数组头部，n>=0  相邻对比交换  类似有序序列冒泡 全得遍历一遍
-                    for(int j=i-gap;j>=0;j-=gap){
-                        if(order[j]>order[j+gap]){
-                            int temp = order[j];
-                            order[j] =order[j+gap];
-                            order[j+gap]=temp;
-                        }
-                    }
-                }
-            }
-        }
-        long end=System.currentTimeMillis();
-        System.out.println("插入排序用时"+((end-start)/1000)+"秒");
-        return order;
-    }
     public static int[] shiftSort(int[] arr){
         long start=System.currentTimeMillis();
         int[] order=Arrays.copyOf(arr,arr.length);
@@ -181,20 +166,112 @@ class ShellSort{
             }
         }
         long end=System.currentTimeMillis();
-        System.out.println("插入排序用时"+((end-start)/1000)+"秒");
+        System.out.println("希尔排序用时"+((end-start)/1000)+"秒");
         return order;
     }
-}
-class ShellSort{
-    public static int[] swapSort(int[] arr){
+/*    public static int[] swapSort(int[] arr){
         long start=System.currentTimeMillis();
         int[] order=Arrays.copyOf(arr,arr.length);
         int m=arr.length;
         if(m!=1){
-
+            for(int gap=m/2;gap>0;gap=gap/2){
+                for(int i=gap;i<m;i++){
+                    //将order[i-n*gap]内最小的排至数组头部，n>=0  相邻对比交换  类似有序序列冒泡 全得遍历一遍
+                    for(int j=i-gap;j>=0;j-=gap){
+                        if(order[j]>order[j+gap]){
+                            int temp = order[j];
+                            order[j] =order[j+gap];
+                            order[j+gap]=temp;
+                        }
+                    }
+                }
+            }
         }
         long end=System.currentTimeMillis();
-        System.out.println("插入排序用时"+((end-start)/1000)+"秒");
+        System.out.println("希尔排序用时"+((end-start)/1000)+"秒");
         return order;
+    }*/
+}
+class QuickSort{
+    public static void sort(int[] arr,int begin,int end){
+        if (begin>=end){
+            return;
+        }
+        int left=begin;
+        int right=end;
+        int key=arr[left]; //取左值为key
+        //将数组分成左侧比key小右侧比key大，key值移至最终指针left=right处
+        while(left<right){
+            while(arr[right]>key&&left<right){
+                right--;
+            }
+            arr[left]=arr[right];
+            while(arr[left]<key&&left<right){
+                left++;
+            }
+            arr[right]=arr[left];
+        }
+        arr[left]=key;
+        QuickSort.sort(arr,begin,left-1);
+        QuickSort.sort(arr,left+1,end);
+    }
+}
+class MergerSort{
+    public static int[] sort(int[] arr){
+        long start=System.currentTimeMillis();
+        int [] order=Arrays.copyOf(arr,arr.length);
+        int m=arr.length;
+        if(m!=1){
+            int[] temp = new int[m];
+            split(order,0,m-1);
+        }
+        long end=System.currentTimeMillis();
+        System.out.println("归并排序用时"+((end-start)/1000)+"秒");
+        return order;
+    }
+    public static void split(int[] order,int left,int right){
+        if(left<right){
+             int mid = (left+right)/2;
+             split(order,left,mid);
+             split(order,mid+1,right);
+             merger(order,left,right);
+        }
+    }
+    public static void merger(int[] order,int left, int right){
+        int i=0;
+        int mid = (left+right)/2;
+        int[] temp = new int[right-left+1];
+        int p1=left;
+        int p2=mid+1;
+        while(true){
+            if(p1>mid){
+                while(p2<=right){
+                    temp[i]=order[p2];
+                    p2++;
+                    i++;
+                }
+                break;
+            }else if(p2>right){
+                while(p1<mid+1){
+                    temp[i]=order[p1];
+                    p1++;
+                    i++;
+                }
+                break;
+            }else if(order[p1]>=order[p2]){
+                temp[i]=order[p2];
+                p2++;
+                i++;
+            } else{
+                temp[i]=order[p1];
+                p1++;
+                i++;
+            }
+        }
+        i--;
+        for(int j=right;j>=left;j--){
+            order[j]=temp[i];
+            i--;
+        }
     }
 }
