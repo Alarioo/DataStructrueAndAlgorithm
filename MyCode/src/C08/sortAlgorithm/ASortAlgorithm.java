@@ -35,10 +35,12 @@ public class ASortAlgorithm {
         //快速排序
         show(arr);
         QuickSort.sort(arr,0, arr.length-1);
-        show(arr);*/
-        //归并排序
         show(arr);
+        //归并排序
         order=MergerSort.sort(arr);
+        show(arr,order);*/
+        //基数排序
+        order=RadixSort.sort(arr);
         show(arr,order);
         }
     public static void show(int[] ... arrs){
@@ -272,6 +274,41 @@ class MergerSort{
         for(int j=right;j>=left;j--){
             order[j]=temp[i];
             i--;
+        }
+    }
+}
+class RadixSort{
+    public static int[] sort(int[] arr){
+        long start=System.currentTimeMillis();
+        int[] order=Arrays.copyOf(arr,arr.length);
+        if(arr.length!=1){
+            int decimal = 1;
+            int[][] radix=new int[10][order.length+1]; //radix[i][m]  记录i维度插入的数量
+            insert(radix,order,decimal,order.length);
+        }
+        long end=System.currentTimeMillis();
+        System.out.println("基数排序用时"+((end-start)/1000)+"秒");
+        return order;
+    }
+    public static void insert(int[][] radix, int[] order, int decimal,int m) {
+        boolean flag = true;
+        while (flag == true) {
+            flag = false;
+            for (int i = 0; i < m; i++) {
+                int temp = order[i]/decimal%10;    //取个十百千万位
+                if (temp != 0) { flag = true;}
+                radix[temp][radix[temp][m]]=order[i];
+                radix[temp][m]++;
+            }
+            int k=0;
+            for(int i=0;i<10;i++){
+                for(int j=0;j<radix[i][m];j++){
+                    order[k]=radix[i][j];
+                    k++;
+                }
+                radix[i][m]=0;
+            }
+            decimal*=10;
         }
     }
 }
