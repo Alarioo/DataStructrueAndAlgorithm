@@ -282,16 +282,16 @@ class RadixSort{
         long start=System.currentTimeMillis();
         int[] order=Arrays.copyOf(arr,arr.length);
         if(arr.length!=1){
-            int decimal = 1;
             int[][] radix=new int[10][order.length+1]; //radix[i][m]  记录i维度插入的数量
-            insert(radix,order,decimal,order.length);
+            insert(radix,order,order.length);
         }
         long end=System.currentTimeMillis();
         System.out.println("基数排序用时"+((end-start)/1000)+"秒");
         return order;
     }
-    public static void insert(int[][] radix, int[] order, int decimal,int m) {
+    public static void insert(int[][] radix, int[] order, int m) {
         boolean flag = true;
+        int decimal = 1;
         while (flag == true) {
             flag = false;
             for (int i = 0; i < m; i++) {
